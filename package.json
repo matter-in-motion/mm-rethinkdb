@@ -1,6 +1,6 @@
 {
   "name": "mm-rethinkdb",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Rethinkdb extension for Matter In Motion",
   "main": "index.js",
   "scripts": {
