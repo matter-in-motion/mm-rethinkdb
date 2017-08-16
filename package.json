@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/matter-in-motion/mm-rethinkdb#readme",
   "dependencies": {
-    "rethinkdbdash": "^2.3.29"
+    "rethinkdbdash": "^2.3.31"
   }
 }
