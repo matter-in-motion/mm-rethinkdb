@@ -1,21 +1,21 @@
 'use strict';
 
-const create = function(cb) {
-  const settings = this.units.require('core.settings').rethinkdb;
+const create = function() {
+  const settings = this.units.require('core.settings').require('rethinkdb');
 
-  if (!settings || !settings.db) {
-    return cb(new Error('No default database is defined in the rethinkdb settings'));
+  if (!settings.db) {
+    throw new Error('No default database is defined in the rethinkdb settings');
   }
 
   const r = this.units.require('db.rethinkdb');
-  r.dbCreate(settings.db).run().asCallback(cb);
+  return r.dbCreate(settings.db).run()
 };
 
-const drop = function(cb) {
-  const settings = this.units.require('core.settings').rethinkdb;
+const drop = function() {
+  const settings = this.units.require('core.settings').require('rethinkdb');
 
-  if (!settings || !settings.db) {
-    return cb(new Error('No default database is defined in the rethinkdb settings'));
+  if (!settings.db) {
+    throw new Error('No default database is defined in the rethinkdb settings');
   }
 
   const readline = require('readline');
@@ -24,16 +24,18 @@ const drop = function(cb) {
     output: process.stdout
   });
 
-  rl.question('All the data will be lost. Are you sure you want to drop database? (y/n): ', (answer) => {
-    rl.close();
-    answer = answer.trim().toLowerCase();
-    if (answer === 'y' || answer === 'yes') {
-      const r = this.units.require('db.rethinkdb');
-      r.dbDrop(settings.db).run().asCallback(cb);
-    } else {
-      cb();
-    }
-  });
+  return new Promise((resolve, reject) => {
+    rl.question('All the data will be lost. Are you sure you want to drop database? (y/n): ', answer => {
+      rl.close();
+      answer = answer.trim().toLowerCase();
+      if (answer === 'y' || answer === 'yes') {
+        const r = this.units.require('db.rethinkdb');
+        return resolve(r.dbDrop(settings.db).run());
+      }
+
+      reject();
+    });
+  })
 }
 
 module.exports = {
