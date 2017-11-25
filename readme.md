@@ -6,7 +6,7 @@ Using [rethinkdbdash](https://github.com/neumino/rethinkdbdash) driver with a co
 
 ## Usage
 
-[Extensions installation intructions](https://github.com/matter-in-motion/mm/blob/master/docs/extensions.md)
+[Extensions installation instructions](https://github.com/matter-in-motion/mm/blob/master/docs/extensions.md)
 
 Adds rethinkdbdash connection pool as `db.rethinkdb` unit.
 
